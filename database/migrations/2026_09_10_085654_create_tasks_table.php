@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\TaskPriorityEnum;
+use App\Enums\TaskStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->string('priority');
+            $table->string('priority')->default(TaskPriorityEnum::MEDIUM);
             $table->date('due_date');
-            $table->string('is_active')->default();
+            $table->string('is_current')->default(TaskStatusEnum::TODO);
             $table->timestamps();
         });
     }
