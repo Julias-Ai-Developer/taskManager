@@ -24,11 +24,6 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Lists',
-        href: '/lists',
-        icon: List,
-    },
-    {
         title: 'Tasks',
         href: '/tasks',
         icon: CheckSquare,

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('priority')->default(TaskPriorityEnum::MEDIUM);
             $table->date('due_date');
-            $table->string('is_current')->default(TaskStatusEnum::TODO);
+            $table->string('status')->default(TaskStatusEnum::TODO);
             $table->timestamps();
         });
     }

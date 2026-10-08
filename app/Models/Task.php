@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\TaskPriorityEnum;
 use App\Enums\TaskStatusEnum;
 use Illuminate\Database\Eloquent\Model;
-use Override;
 
 class Task extends Model
 {
@@ -13,8 +12,8 @@ class Task extends Model
         'title',
         'description',
         'priority',
+        'status',
         'due_date',
-        'is_current',
     ];
     public function casts(): array
     {

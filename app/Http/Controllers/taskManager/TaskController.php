@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\taskManager;
 
+use App\Enums\TaskStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -15,15 +16,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Inertia::render('taskManager/tasks/Index');
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $tasks = Task::paginate(10);
+        return Inertia::render('taskManager/tasks/Index', [
+            'tasks' => $tasks,
+            'statuses' => collect(TaskStatusEnum::cases())->map(fn($status) => [
+                'value' => $status->value,
+                'label' => $status->label(),
+            ]),
+        ]);
     }
 
     /**
@@ -31,17 +32,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'priority' => 'required|string',
+            'status' => 'required|string',
+            'due_date' => 'required|string',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        Task::create($validated);
 
+        return redirect()->route('tasks')->with('success', 'Task created successfully!');
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -49,15 +51,6 @@ class TaskController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
